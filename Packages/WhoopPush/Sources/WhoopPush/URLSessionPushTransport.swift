@@ -7,7 +7,7 @@ public final class URLSessionPushTransport: NSObject, PushTransport, URLSessionT
     private let token: String
     private var session: URLSession!
 
-    public init(endpoint: URL, token: String, timeout: TimeInterval = 15) {
+    public init(endpoint: URL, token: String, timeout: TimeInterval = 15, wifiOnly: Bool = false) {
         self.endpoint = endpoint
         self.token = token
         super.init()
@@ -15,6 +15,10 @@ public final class URLSessionPushTransport: NSObject, PushTransport, URLSessionT
         config.timeoutIntervalForRequest = timeout
         config.timeoutIntervalForResource = timeout * 2
         config.waitsForConnectivity = false
+        // Wi-Fi only: žádná mobilní data ani drahá/omezená síť (hotspot).
+        config.allowsCellularAccess = !wifiOnly
+        config.allowsExpensiveNetworkAccess = !wifiOnly
+        config.allowsConstrainedNetworkAccess = !wifiOnly
         session = URLSession(configuration: config, delegate: self, delegateQueue: nil)
     }
 

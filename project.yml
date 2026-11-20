@@ -50,6 +50,11 @@ packages:
     path: Packages/WhoopProtocol
   WhoopStore:
     path: Packages/WhoopStore
+  # Experimental self-hosted push (docs/PUSH_PROTOCOL.md): pure protocol core + the GRDB reader.
+  WhoopPush:
+    path: Packages/WhoopPush
+  WhoopPushStore:
+    path: Packages/WhoopPushStore
   StrandAnalytics:
     path: Packages/StrandAnalytics
   StrandImport:
@@ -151,6 +156,8 @@ targets:
     dependencies:
       - package: WhoopProtocol
       - package: WhoopStore
+      - package: WhoopPush
+      - package: WhoopPushStore
       - package: StrandAnalytics
       - package: StrandImport
       - package: StrandDesign
@@ -316,6 +323,9 @@ targets:
         # are unaffected, so cloud providers stay TLS. Mirrors the macOS target.
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
+        # Self-hosted push (Experimental, off by default): lets the user point NOOP at a server on their own
+        # network. Only shown if they do; nothing is sent until they turn the feature on.
+        NSLocalNetworkUsageDescription: NOOP can send your data to a server on your own network if you set that up in Self-hosted push.
         # #155: expose the app's Documents folder to Files/Shortcuts so the user's Siri Shortcut can
         # read the opt-in noop_sync.txt drop file (Apple-Health-free export for sideloaded installs).
         # Both keys are required for the folder to actually appear in Files.
@@ -357,6 +367,8 @@ targets:
     dependencies:
       - package: WhoopProtocol
       - package: WhoopStore
+      - package: WhoopPush
+      - package: WhoopPushStore
       - package: StrandAnalytics
       - package: StrandImport
       - package: StrandDesign

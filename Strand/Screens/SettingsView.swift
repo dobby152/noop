@@ -2238,6 +2238,25 @@ struct SettingsView: View {
                     .foregroundStyle(StrandPalette.accent)
                 }
                 .buttonStyle(LiquidPressStyle())
+
+                // Experimental, default-off one-way export to the user's own HTTPS endpoint (docs/PUSH_PROTOCOL.md).
+                NavigationLink {
+                    SelfHostedPushView()
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "arrow.up.circle.fill")
+                            .accessibilityHidden(true)
+                        Text("Odesílání na vlastní server (experimentální)…")
+                        Spacer(minLength: 0)
+                        Image(systemName: "chevron.right")
+                            .font(StrandFont.caption)
+                            .foregroundStyle(StrandPalette.textTertiary)
+                            .accessibilityHidden(true)
+                    }
+                    .font(StrandFont.subhead)
+                    .foregroundStyle(StrandPalette.accent)
+                }
+                .buttonStyle(LiquidPressStyle())
                 .accessibilityLabel("Open Backup and Sync to a folder")
             }
         }

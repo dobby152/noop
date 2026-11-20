@@ -211,7 +211,9 @@ not a NOOP cloud, account, restore path, or two-way sync:
   hostnames are rejected, so DNS cannot move an allowed local URL to a public address. Even on an
   allowed IP, HTTP exposes the token and batch contents locally, so HTTPS remains preferable.
 
-The repository ships the Android client and protocol document, not a server. The feature remains
+This fork also ships an Apple (iOS and macOS) client with the same contract: Settings → "Odesílání na vlastní server" (Self-hosted push). It is Experimental and off until the user turns it on. The token is kept in the Keychain (`com.noop.selfhostedpush`), progress lives in UserDefaults, redirects are never followed, and the Wi-Fi-only default also excludes expensive and constrained networks. The code is in `Packages/WhoopPush` (pure protocol core), `Packages/WhoopPushStore` (GRDB reader) and `Strand/System/SelfHostedPush.swift`.
+
+The repository ships the clients and protocol document, not a server. The feature remains
 Experimental and default-off under the boundary in [`SCOPE.md`](SCOPE.md).
 
 ### 1.2 The macOS sandbox (and what it means for the AI Coach and the Oura import)
