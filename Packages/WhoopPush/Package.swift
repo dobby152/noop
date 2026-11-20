@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "WhoopPush",
-    platforms: [.macOS(.v13), .iOS(.v17)],
+    platforms: [.macOS(.v13), .iOS(.v16)],
     products: [.library(name: "WhoopPush", targets: ["WhoopPush"])],
     targets: [
         .target(name: "WhoopPush"),
