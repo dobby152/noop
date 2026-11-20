@@ -424,6 +424,8 @@ final class AppModel: ObservableObject {
             .debounce(for: .seconds(2), scheduler: DispatchQueue.main)
             .sink { [weak self] _ in
                 Task { [weak self] in await self?.refreshAfterCompletedBackfill() }
+                // Self-hosted push (Experimental, default off): runs after a completed offload, outside the strap sync.
+                self?.triggerSelfHostedPush()
             }
             .store(in: &hrCancellables)
 
@@ -436,6 +438,12 @@ final class AppModel: ObservableObject {
         rehydrateActiveWorkout()
 
         AppModel.shared = self   // publish for App Intents (Shortcuts) , see the static above (#42)
+
+        // Self-hosted push launch catch-up (no-op unless the user turned it on). Delayed so it never competes with launch.
+        Task { [weak self] in
+            try? await Task.sleep(nanoseconds: 20_000_000_000)
+            self?.triggerSelfHostedPush()
+        }
 
         // Seed the BLE client with the persisted "Continuous HRV capture" intent so `wantsRealtime`
         // reflects it from launch , the reconciler then arms the dense stream as soon as the strap bonds
